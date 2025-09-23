@@ -1,9 +1,7 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+@source "../**/*.{ts,tsx}";
+@source "../../packages/ui/dist/**/*.{js,jsx,ts,tsx}";
+@source "../../packages/utils/dist/**/*.{js,jsx,ts,tsx}";
 
-:root {
-  --color-primary: #FFFFFF;
-  --color-secondary: #1463FF;
-}
-body { background: var(--color-primary); color: #0A0A0A; }
+:root { --color-primary:#FFFFFF; --color-secondary:#1463FF; }
+body { background:var(--color-primary); color:#0A0A0A; }
