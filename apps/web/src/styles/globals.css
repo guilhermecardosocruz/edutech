@@ -1,7 +1,37 @@
 @import "tailwindcss";
-@source "../**/*.{ts,tsx}";
+
+/* Diretivas para árvore de origem (Tailwind v4) */
+@source "./**/*.{ts,tsx}";
+@source "../app/**/*.{ts,tsx}";
 @source "../../packages/ui/dist/**/*.{js,jsx,ts,tsx}";
 @source "../../packages/utils/dist/**/*.{js,jsx,ts,tsx}";
 
-:root { --color-primary:#FFFFFF; --color-secondary:#1463FF; }
-body { background:var(--color-primary); color:#0A0A0A; }
+/* Tokens Edutech */
+:root {
+  --color-primary: #ffffff;   /* branco */
+  --color-secondary: #1463FF; /* azul */
+  --radius-xl: 12px;
+  --radius-2xl: 16px;
+  --bg-soft: #f6f8fb;
+}
+
+/* Base */
+html, body { height: 100%; }
+body {
+  @apply antialiased text-neutral-900 bg-[var(--color-primary)];
+}
+.container-page {
+  @apply min-h-[100svh] flex items-center justify-center p-6;
+}
+.card {
+  @apply rounded-2xl bg-white shadow border border-neutral-100;
+}
+.btn {
+  @apply rounded-xl px-4 py-2.5 font-semibold focus:outline-none focus:ring-2 focus:ring-offset-2;
+}
+.btn-primary {
+  @apply text-white bg-[var(--color-secondary)] hover:opacity-90 focus:ring-[var(--color-secondary)];
+}
+.input {
+  @apply w-full rounded-xl border border-neutral-300 bg-white px-3 py-2.5 text-[15px] outline-none focus:ring-2 focus:ring-[var(--color-secondary)] focus:border-[var(--color-secondary)];
+}

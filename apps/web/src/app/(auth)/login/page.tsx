@@ -1,11 +1,10 @@
-import Image from "next/image";
 import Link from "next/link";
 
 export const metadata = { title: "Entrar — Edutech" };
 
 export default function LoginPage() {
   return (
-    <main className="min-h-[100svh] bg-[var(--color-primary)] flex items-center justify-center p-6">
+    <main className="container-page bg-[var(--color-primary)]">
       <div className="w-full max-w-[420px]">
         <div className="mb-8 flex flex-col items-center gap-2">
           <Link href="/" className="select-none">
@@ -16,25 +15,15 @@ export default function LoginPage() {
           </p>
         </div>
 
-        <form
-          action="/api/auth/login"
-          method="post"
-          className="rounded-2xl bg-white shadow p-5 sm:p-6 space-y-4 border border-neutral-100"
-        >
+        <form action="/api/auth/login" method="post" className="card p-5 sm:p-6 space-y-4">
           <div className="space-y-1.5">
             <label htmlFor="cpf" className="block text-sm font-medium text-neutral-800">CPF</label>
-            <input
-              id="cpf" name="cpf" inputMode="numeric" pattern="\d{11}" placeholder="Somente números" required
-              className="w-full rounded-xl border border-neutral-300 bg-white px-3 py-2.5 text-[15px] outline-none focus:ring-2 focus:ring-[var(--color-secondary)] focus:border-[var(--color-secondary)]"
-            />
+            <input id="cpf" name="cpf" inputMode="numeric" pattern="\d{11}" placeholder="Somente números" required className="input" />
           </div>
 
           <div className="space-y-1.5">
             <label htmlFor="password" className="block text-sm font-medium text-neutral-800">Senha</label>
-            <input
-              id="password" name="password" type="password" autoComplete="current-password" required
-              className="w-full rounded-xl border border-neutral-300 bg-white px-3 py-2.5 text-[15px] outline-none focus:ring-2 focus:ring-[var(--color-secondary)] focus:border-[var(--color-secondary)]"
-            />
+            <input id="password" name="password" type="password" autoComplete="current-password" required className="input" />
           </div>
 
           <div className="flex items-center justify-between pt-1">
@@ -47,12 +36,7 @@ export default function LoginPage() {
             </Link>
           </div>
 
-          <button
-            type="submit"
-            className="w-full rounded-xl px-4 py-2.5 font-semibold text-white bg-[var(--color-secondary)] hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-[var(--color-secondary)] focus:ring-offset-2"
-          >
-            Entrar
-          </button>
+          <button type="submit" className="btn btn-primary w-full">Entrar</button>
 
           <div className="text-center text-sm text-neutral-700">
             Não tem conta?{" "}
