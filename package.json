@@ -10,11 +10,14 @@
     "db:generate": "cd packages/db && pnpm prisma generate",
     "db:push": "cd packages/db && pnpm prisma db push",
     "web": "cd apps/web && pnpm dev",
-    "mobile": "cd apps/mobile && pnpm start"
+    "mobile": "cd apps/mobile && pnpm start",
+    "prebuild": "pnpm -w --filter @edu/db run prisma:generate"
   },
   "devDependencies": {
+    "@types/node": "^24.5.2",
+    "@types/react": "~19.1.0",
+    "@types/react-dom": "^19.1.9",
     "turbo": "^2.5.6",
-    "typescript": "^5.9.2",
-    "@types/node": "^24.5.2"
+    "typescript": "^5.9.2"
   }
 }

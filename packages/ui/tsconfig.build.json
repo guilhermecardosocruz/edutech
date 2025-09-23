@@ -1,18 +1,5 @@
 {
-  "extends": "../../tsconfig.base.json",
-  "compilerOptions": {
-    "outDir": "dist",
-    "declaration": true,
-    "emitDeclarationOnly": false,
-    "jsx": "react-jsx",
-    "module": "ESNext",
-    "target": "ES2022",
-    "moduleResolution": "Bundler",
-    "noEmit": false,
-    "skipLibCheck": true,
-
-    "baseUrl": ".",
-    "paths": {}
-  },
-  "include": ["./index.tsx"]
+  "extends": "./tsconfig.json",
+  "compilerOptions": { "noEmit": false, "emitDeclarationOnly": false },
+  "include": ["src"]
 }

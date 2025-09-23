@@ -1,0 +1,21 @@
+import nextPlugin from 'eslint-plugin-next';
+import tseslint from 'typescript-eslint';
+
+export default [
+  { ignores: ['.next/**', 'node_modules/**'] },
+  ...tseslint.configs.recommendedTypeChecked.map(c => ({
+    ...c,
+    files: ['**/*.{ts,tsx}'],
+    languageOptions: {
+      ...c.languageOptions,
+      parserOptions: { ...c.languageOptions?.parserOptions, project: ['./tsconfig.json'] }
+    }
+  })),
+  {
+    files: ['**/*.{ts,tsx}'],
+    plugins: { next: nextPlugin },
+    rules: {
+      ...nextPlugin.configs['core-web-vitals'].rules
+    }
+  }
+];
