@@ -93,14 +93,13 @@ importers:
         version: 6.16.2(typescript@5.9.2)
 
   packages/ui:
-    dependencies:
+    devDependencies:
       react:
-        specifier: '>=18'
+        specifier: 19.1.0
         version: 19.1.0
       react-dom:
-        specifier: '>=18'
+        specifier: 19.1.0
         version: 19.1.0(react@19.1.0)
-    devDependencies:
       typescript:
         specifier: ^5.9.2
         version: 5.9.2

@@ -5,6 +5,7 @@ type Variant = 'default' | 'ghost' | 'outline';
 
 export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: Variant;
+  className?: string; // garante a prop mesmo se os tipos não carregarem
 }
 
 const base = 'rounded-2xl px-4 py-2 font-semibold focus:outline-none focus:ring-2 focus:ring-offset-2';
