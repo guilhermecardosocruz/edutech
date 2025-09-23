@@ -6,7 +6,10 @@
   "types": "dist/index.d.ts",
   "files": ["dist"],
   "sideEffects": false,
-  "scripts": { "build": "tsc -p tsconfig.build.json", "clean": "rm -rf dist" },
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "clean": "rm -rf dist"
+  },
   "peerDependencies": {
     "react": ">=18",
     "react-dom": ">=18"

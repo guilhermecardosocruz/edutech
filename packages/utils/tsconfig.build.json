@@ -1,0 +1,17 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "outDir": "dist",
+    "declaration": true,
+    "emitDeclarationOnly": false,
+    "module": "ESNext",
+    "target": "ES2022",
+    "moduleResolution": "Bundler",
+    "noEmit": false,
+    "skipLibCheck": true,
+
+    "baseUrl": ".",
+    "paths": {}
+  },
+  "include": ["./index.ts"]
+}
