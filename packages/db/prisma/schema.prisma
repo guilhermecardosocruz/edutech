@@ -1,0 +1,99 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role { admin gestor professor }
+
+model User {
+  id          String   @id @default(cuid())
+  email       String   @unique
+  name        String
+  role        Role     @default(professor)
+  password    String
+  createdAt   DateTime @default(now())
+  TeacherClass TeacherClass[]
+}
+
+model School {
+  id        String   @id @default(cuid())
+  name      String
+  createdAt DateTime @default(now())
+  classrooms Classroom[]
+}
+
+model Classroom {
+  id        String   @id @default(cuid())
+  name      String
+  year      Int
+  schoolId  String
+  school    School   @relation(fields: [schoolId], references: [id])
+  lessonPlans LessonPlan[]
+  announcements Announcement[]
+  assessments  Assessment[]
+  teachers   TeacherClass[]
+}
+
+model TeacherClass {
+  userId     String
+  classroomId String
+  user       User      @relation(fields: [userId], references: [id])
+  classroom  Classroom @relation(fields: [classroomId], references: [id])
+  @@id([userId, classroomId])
+}
+
+model LessonPlan {
+  id          String   @id @default(cuid())
+  classroomId String
+  classroom   Classroom @relation(fields: [classroomId], references: [id])
+  title       String
+  objectives  String?
+  date        DateTime
+  createdById String?
+  createdAt   DateTime @default(now())
+  attachments Attachment[]
+}
+
+model Attachment {
+  id     String @id @default(cuid())
+  planId String
+  plan   LessonPlan @relation(fields: [planId], references: [id])
+  url    String
+  type   String
+}
+
+model Announcement {
+  id          String   @id @default(cuid())
+  classroomId String
+  classroom   Classroom @relation(fields: [classroomId], references: [id])
+  title       String
+  body        String
+  publishedAt DateTime @default(now())
+  readCount   Int      @default(0)
+}
+
+enum AssessmentKind { objective short }
+
+model Assessment {
+  id          String   @id @default(cuid())
+  classroomId String
+  classroom   Classroom @relation(fields: [classroomId], references: [id])
+  title       String
+  kind        AssessmentKind
+  dueDate     DateTime?
+  createdAt   DateTime @default(now())
+  submissions Submission[]
+}
+
+model Submission {
+  id           String   @id @default(cuid())
+  assessmentId String
+  assessment   Assessment @relation(fields: [assessmentId], references: [id])
+  userId       String
+  score        Float?
+  submittedAt  DateTime?
+}

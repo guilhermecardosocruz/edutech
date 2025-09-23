@@ -1,0 +1,32 @@
+# Node / pnpm
+node_modules/
+.pnpm-store/
+pnpm-debug.log
+*.log
+
+# Build/Next
+.next/
+out/
+dist/
+build/
+.vercel/
+
+# Expo
+.expo/
+*.ipa
+*.apk
+*.aab
+
+# Env
+.env
+.env.*
+packages/db/.env
+
+# Prisma
+packages/db/prisma/*.db
+
+# OS/Editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
