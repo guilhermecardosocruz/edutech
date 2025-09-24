@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { CpfInput } from "@/components/CpfInput";
 
 export const metadata = { title: "Cadastre-se — Edutech" };
 
@@ -7,39 +8,43 @@ export default function RegisterPage() {
     <main className="container-page bg-[var(--color-primary)]">
       <div className="w-full max-w-[520px]">
         <div className="mb-8 flex flex-col items-center gap-2">
-          <Link href="/" className="select-none">
-            <div className="text-3xl font-extrabold tracking-tight text-[var(--color-secondary)]">Edutech</div>
-          </Link>
-          <p className="text-sm text-neutral-600 text-center">
-            Crie sua conta de gestor(a) ou professor(a)
-          </p>
+          <div className="text-3xl font-extrabold tracking-tight text-[var(--color-secondary)]">Edutech</div>
+          <p className="text-sm text-neutral-600 text-center">Crie sua conta de gestor(a) ou professor(a)</p>
         </div>
 
         <form action="/api/auth/register" method="post" className="card p-5 sm:p-6 space-y-4">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="space-y-1.5">
-              <label htmlFor="name" className="block text-sm font-medium text-neutral-800">Nome completo</label>
-              <input id="name" name="name" required autoComplete="name" className="input" />
+              <label htmlFor="name" className="sr-only">Nome completo</label>
+              <input id="name" name="name" required autoComplete="name" placeholder="Nome completo" className="input" />
             </div>
+
             <div className="space-y-1.5">
-              <label htmlFor="cpf" className="block text-sm font-medium text-neutral-800">CPF</label>
-              <input id="cpf" name="cpf" inputMode="numeric" pattern="\\d{11}" placeholder="Somente números" required className="input" />
+              <label htmlFor="cpf" className="sr-only">CPF</label>
+              <CpfInput required />
             </div>
+
             <div className="space-y-1.5 sm:col-span-2">
-              <label htmlFor="email" className="block text-sm font-medium text-neutral-800">E-mail</label>
-              <input id="email" name="email" type="email" required autoComplete="email" className="input" />
+              <label htmlFor="email" className="sr-only">E-mail</label>
+              <input id="email" name="email" type="email" required autoComplete="email" placeholder="E-mail" className="input" />
             </div>
+
             <div className="space-y-1.5">
-              <label htmlFor="password" className="block text-sm font-medium text-neutral-800">Senha</label>
-              <input id="password" name="password" type="password" required autoComplete="new-password" minLength={8} className="input" />
+              <label htmlFor="password" className="sr-only">Senha</label>
+              <input id="password" name="password" type="password" required autoComplete="new-password" minLength={8}
+                     placeholder="Senha (mín. 8 caracteres)" className="input" />
             </div>
+
             <div className="space-y-1.5">
-              <label htmlFor="confirm" className="block text-sm font-medium text-neutral-800">Confirmar senha</label>
-              <input id="confirm" name="confirm" type="password" required minLength={8} className="input" />
+              <label htmlFor="confirm" className="sr-only">Confirmar senha</label>
+              <input id="confirm" name="confirm" type="password" required minLength={8}
+                     placeholder="Confirmar senha" className="input" />
             </div>
+
             <div className="space-y-1.5 sm:col-span-2">
-              <label htmlFor="role" className="block text-sm font-medium text-neutral-800">Perfil</label>
+              <label htmlFor="role" className="sr-only">Perfil</label>
               <select id="role" name="role" required className="input">
+                <option value="">Selecione o perfil</option>
                 <option value="professor">Professor(a)</option>
                 <option value="gestor">Gestor(a)</option>
               </select>

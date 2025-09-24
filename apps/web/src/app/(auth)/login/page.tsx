@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { CpfInput } from "@/components/CpfInput";
 
 export const metadata = { title: "Entrar — Edutech" };
 
@@ -6,34 +7,29 @@ export default function LoginPage() {
   return (
     <main className="container-page bg-[var(--color-primary)]">
       <div className="w-full max-w-[420px]">
-        <div className="mb-8 flex flex-col items-center gap-2">
-          <Link href="/" className="select-none">
-            <div className="text-3xl font-extrabold tracking-tight text-[var(--color-secondary)]">Edutech</div>
-          </Link>
-          <p className="text-sm text-neutral-600 text-center">
-            Acesse sua conta de gestor(a) ou professor(a)
-          </p>
+        <div className="mb-8 text-center">
+          <div className="text-3xl font-extrabold tracking-tight text-[var(--color-secondary)]">Edutech</div>
+          <p className="mt-1 text-sm text-neutral-600">Acesse sua conta de gestor(a) ou professor(a)</p>
         </div>
 
         <form action="/api/auth/login" method="post" className="card p-5 sm:p-6 space-y-4">
           <div className="space-y-1.5">
-            <label htmlFor="cpf" className="block text-sm font-medium text-neutral-800">CPF</label>
-            <input id="cpf" name="cpf" inputMode="numeric" pattern="\\d{11}" placeholder="Somente números" required className="input" />
+            <label htmlFor="cpf" className="sr-only">CPF</label>
+            <CpfInput required />
           </div>
 
           <div className="space-y-1.5">
-            <label htmlFor="password" className="block text-sm font-medium text-neutral-800">Senha</label>
-            <input id="password" name="password" type="password" autoComplete="current-password" required className="input" />
+            <label htmlFor="password" className="sr-only">Senha</label>
+            <input id="password" name="password" type="password" required autoComplete="current-password"
+                   placeholder="Senha" className="input" />
           </div>
 
-          <div className="flex items-center justify-between pt-1">
-            <label className="flex items-center gap-2 text-sm text-neutral-700">
+          <div className="flex items-center justify-between text-sm">
+            <label className="inline-flex items-center gap-2">
               <input type="checkbox" name="remember" className="size-4 rounded border-neutral-300" />
-              Manter conectado
+              <span className="text-neutral-700">Manter conectado</span>
             </label>
-            <Link href="/(auth)/forgot" className="text-sm font-medium text-[var(--color-secondary)] hover:underline">
-              Esqueci minha senha
-            </Link>
+            <Link href="/recover" className="text-[var(--color-secondary)] hover:underline">Esqueci minha senha</Link>
           </div>
 
           <button type="submit" className="btn btn-primary w-full">Entrar</button>
