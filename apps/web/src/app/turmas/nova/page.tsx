@@ -13,8 +13,7 @@ export default function NovaTurmaPage() {
           </div>
 
           <form action="/api/turmas/create" method="post" className="space-y-3">
-            <input name="name" required placeholder="Nome da turma" className="input" />
-            <input name="ano" placeholder="Ano/Série (ex.: 6º ano A)" className="input" />
+            <input name="name" required placeholder="Nome da turma (ex.: 6º Ano A)" className="input" />
             <button type="submit" className="btn btn-primary">Salvar</button>
           </form>
 

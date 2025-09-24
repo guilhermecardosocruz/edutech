@@ -30,3 +30,5 @@ packages/db/prisma/*.db
 Thumbs.db
 .idea/
 .vscode/
+
+.turbo/

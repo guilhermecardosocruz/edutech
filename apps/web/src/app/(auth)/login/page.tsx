@@ -23,8 +23,8 @@ export default function LoginPage() {
 
           <div className="flex items-center justify-between text-sm">
             <label className="inline-flex items-center gap-2">
-              <input type="checkbox" name="remember" className="size-4 rounded border-neutral-300" />
-              <span className="text-neutral-700">Manter conectado</span>
+              <input type="checkbox" name="remember" value="1" className="size-4 rounded border-neutral-300" />
+              <span className="text-neutral-700">Manter-me conectado</span>
             </label>
             <Link href="/recover" className="text-[var(--color-secondary)] hover:underline">Esqueci minha senha</Link>
           </div>
