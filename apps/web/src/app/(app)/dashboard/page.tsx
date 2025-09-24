@@ -1,29 +1,59 @@
 import Link from "next/link";
-import { getLoggedUserName } from "@/lib/auth";
+import { cookies } from "next/headers";
 
-export const metadata = { title: "Painel — Edutech" };
+type Turma = { id: string; name: string; createdAt: string };
+
+export const metadata = { title: "Dashboard — Edutech" };
 
 export default async function DashboardPage() {
-  const name = getLoggedUserName() ?? "Professor(a)";
+  const jar = cookies();
+  let turmas: Turma[] = [];
+  try {
+    const raw = jar.get("turmas")?.value;
+    if (raw) turmas = JSON.parse(raw);
+  } catch {
+    turmas = [];
+  }
+
   return (
-    <main className="container-page bg-[var(--color-primary)]">
-      <div className="w-full max-w-[880px]">
-        <div className="flex items-center justify-between mb-4">
-          <h1 className="text-xl sm:text-2xl font-semibold text-neutral-800">
-            Olá, <span className="font-bold">{name}</span>
-          </h1>
-          <Link href="/turmas/nova" className="btn btn-primary">
-            Nova turma
+    <div className="space-y-6">
+      <div className="flex items-center justify-between">
+        <h1 className="text-xl sm:text-2xl font-semibold text-neutral-800">Minhas turmas</h1>
+        <Link
+          href="/turmas/nova"
+          className="px-3 py-1.5 rounded-md bg-[var(--color-secondary)] text-white text-sm hover:opacity-90"
+        >
+          + Nova turma
+        </Link>
+      </div>
+
+      {turmas.length === 0 ? (
+        <div className="card p-6">
+          <p className="text-neutral-700">Você ainda não criou turmas.</p>
+          <Link href="/turmas/nova" className="inline-block mt-3 text-[var(--color-secondary)] hover:underline">
+            Criar a primeira turma →
           </Link>
         </div>
-
-        <div className="card p-5 sm:p-6">
-          <h2 className="text-lg font-semibold mb-2">Suas turmas</h2>
-          <p className="text-sm text-neutral-600">
-            Após criar uma turma, você será levado(a) para a página dela. Em seguida, ela passará a aparecer aqui quando integrarmos o banco de dados.
-          </p>
-        </div>
-      </div>
-    </main>
+      ) : (
+        <ul className="grid gap-3 sm:grid-cols-2">
+          {turmas.map((t) => (
+            <li key={t.id}>
+              <Link
+                href={`/turmas/${t.id}?name=${encodeURIComponent(t.name)}`}
+                className="block rounded-lg border border-neutral-200 bg-white p-4 hover:shadow-sm transition"
+              >
+                <div className="flex items-center justify-between">
+                  <h2 className="font-medium text-neutral-900">{t.name}</h2>
+                  <span className="text-xs text-neutral-500">#{t.id}</span>
+                </div>
+                <p className="mt-1 text-xs text-neutral-500">
+                  Criada em {new Date(t.createdAt).toLocaleString("pt-BR")}
+                </p>
+              </Link>
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
   );
 }

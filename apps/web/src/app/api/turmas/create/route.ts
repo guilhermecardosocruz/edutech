@@ -1,19 +1,40 @@
 import { NextResponse } from "next/server";
+import { cookies } from "next/headers";
 
-function slugify(input: string) {
-  return input
-    .normalize("NFD").replace(/[\u0300-\u036f]/g, "") // remover acentos
-    .toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
-}
+type Turma = { id: string; name: string; createdAt: string };
 
-export async function POST(req: Request) {
-  const form = await req.formData();
-  const name = String(form.get("name") || "").trim();
-  if (!name) {
-    return NextResponse.redirect(new URL("/turmas/nova?error=nome", req.url));
+export async function POST(request: Request) {
+  const form = await request.formData();
+  const name = String(form.get("name") || "").trim() || "Turma";
+
+  // id simples (cuid-like)
+  const id = Math.random().toString(36).slice(2, 10);
+
+  // carrega cookie existente
+  const jar = cookies();
+  let list: Turma[] = [];
+  try {
+    const raw = jar.get("turmas")?.value;
+    if (raw) list = JSON.parse(raw);
+  } catch {
+    list = [];
   }
-  const slugBase = slugify(name);
-  const id = `${slugBase}-${Date.now().toString(36)}`; // id único simples
-  // TODO: persistir no banco (id, name)
-  return NextResponse.redirect(new URL(`/turmas/${encodeURIComponent(id)}?name=${encodeURIComponent(name)}`, req.url));
+
+  // adiciona turma
+  list.push({ id, name, createdAt: new Date().toISOString() });
+
+  // persiste por 180 dias
+  jar.set({
+    name: "turmas",
+    value: JSON.stringify(list),
+    httpOnly: true,
+    sameSite: "lax",
+    secure: true,
+    path: "/",
+    maxAge: 60 * 60 * 24 * 180,
+  });
+
+  // redireciona para página da turma
+  const url = new URL(`/turmas/${id}?name=${encodeURIComponent(name)}`, request.url);
+  return NextResponse.redirect(url, { status: 302 });
 }
