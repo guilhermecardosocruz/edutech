@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { CpfInput } from "@/components/CpfInput";
+import { LoginCpfField } from "@/components/LoginCpfField";
 import { PasswordInput } from "@/components/PasswordInput";
 
 export const metadata = { title: "Entrar — Edutech" };
@@ -14,11 +14,7 @@ export default function LoginPage() {
         </div>
 
         <form action="/api/auth/login" method="post" className="card p-5 sm:p-6 space-y-4">
-          <div className="space-y-1.5">
-            <label htmlFor="cpf" className="sr-only">CPF</label>
-            <CpfInput required />
-          </div>
-
+          <LoginCpfField />
           <PasswordInput required placeholder="Senha" />
 
           <div className="flex items-center justify-between text-sm">
