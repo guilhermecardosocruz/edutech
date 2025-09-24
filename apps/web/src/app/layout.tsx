@@ -1,9 +1,13 @@
-import type { Metadata } from "next";
-import "@/styles/globals.css";
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;               // sem SSG
+export const fetchCache = 'default-no-store';
 
-export const metadata: Metadata = {
-  title: "Edutech",
-  description: "Plataforma de educação para gestores e professores.",
+import '../styles/globals.css'; // ajuste o caminho se seu globals.css estiver em src/styles
+import React from 'react';
+
+export const metadata = {
+  title: 'Edutech',
+  description: 'Plataforma para gestores e professores',
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
