@@ -13,10 +13,10 @@ function formatCPF(input: string) {
 }
 
 /**
- * Input controlado para CPF.
- * - Aplica máscara ao digitar
- * - Aceita só dígitos ou com máscara
- * - Mostra placeholder "000.000.000-00"
+ * Comportamento:
+ * - placeholder inicia como "CPF"
+ * - ao focar, placeholder vira "000.000.000-00"
+ * - máscara aplicada conforme digita
  */
 export function CpfInput(props: {
   id?: string;
@@ -29,16 +29,20 @@ export function CpfInput(props: {
   const [value, setValue] = React.useState(
     props.defaultValue ? formatCPF(props.defaultValue) : ""
   );
+  const [ph, setPh] = React.useState("CPF");
+
   return (
     <input
       id={props.id ?? "cpf"}
       name={props.name ?? "cpf"}
       required={props.required}
       value={value}
+      onFocus={() => setPh("000.000.000-00")}
+      onBlur={() => { if (!value) setPh("CPF"); }}
       onChange={(e) => setValue(formatCPF(e.target.value))}
       inputMode="numeric"
       autoComplete="username"
-      placeholder="000.000.000-00"
+      placeholder={ph}
       maxLength={14}
       // aceita "00000000000" OU "000.000.000-00"
       pattern={"^\\d{11}$|^\\d{3}\\.\\d{3}\\.\\d{3}-\\d{2}$"}
