@@ -17,8 +17,6 @@ export async function POST(req: Request) {
     return NextResponse.json({ ok: false, error: "Dados inválidos" }, { status: 400 });
   }
 
-  // TODO: hash da senha + prisma.user.create({ data: { name, email, cpf, passwordHash } })
-  // O papel (professor/gestor) será definido depois no sistema.
-
-  return NextResponse.redirect(new URL("/login?registered=1", req.url));
+  // TODO: hash + persistência no banco (Prisma)
+  return NextResponse.redirect(new URL("/register/sucesso", req.url));
 }

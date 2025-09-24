@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { CpfInput } from "@/components/CpfInput";
+import { PasswordInput } from "@/components/PasswordInput";
 
 export const metadata = { title: "Entrar — Edutech" };
 
@@ -9,7 +10,7 @@ export default function LoginPage() {
       <div className="w-full max-w-[420px]">
         <div className="mb-8 text-center">
           <div className="text-3xl font-extrabold tracking-tight text-[var(--color-secondary)]">Edutech</div>
-          <p className="mt-1 text-sm text-neutral-600">Acesse sua conta de gestor(a) ou professor(a)</p>
+          <p className="mt-1 text-sm text-neutral-600">Acesse sua conta</p>
         </div>
 
         <form action="/api/auth/login" method="post" className="card p-5 sm:p-6 space-y-4">
@@ -18,11 +19,7 @@ export default function LoginPage() {
             <CpfInput required />
           </div>
 
-          <div className="space-y-1.5">
-            <label htmlFor="password" className="sr-only">Senha</label>
-            <input id="password" name="password" type="password" required autoComplete="current-password"
-                   placeholder="Senha" className="input" />
-          </div>
+          <PasswordInput required placeholder="Senha" />
 
           <div className="flex items-center justify-between text-sm">
             <label className="inline-flex items-center gap-2">

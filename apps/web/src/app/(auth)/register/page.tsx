@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { CpfInput } from "@/components/CpfInput";
+import { PasswordInput } from "@/components/PasswordInput";
 
 export const metadata = { title: "Cadastre-se — Edutech" };
 
@@ -29,17 +30,15 @@ export default function RegisterPage() {
               <input id="email" name="email" type="email" required autoComplete="email" placeholder="E-mail" className="input" />
             </div>
 
-            <div className="space-y-1.5">
-              <label htmlFor="password" className="sr-only">Senha</label>
-              <input id="password" name="password" type="password" required autoComplete="new-password" minLength={8}
-                     placeholder="Senha (mín. 8 caracteres)" className="input" />
-            </div>
+            <PasswordInput required autoComplete="new-password" placeholder="Senha (mín. 8 caracteres)" showStrength />
 
-            <div className="space-y-1.5">
-              <label htmlFor="confirm" className="sr-only">Confirmar senha</label>
-              <input id="confirm" name="confirm" type="password" required minLength={8}
-                     placeholder="Confirmar senha" className="input" />
-            </div>
+            <PasswordInput
+              id="confirm"
+              name="confirm"
+              required
+              autoComplete="new-password"
+              placeholder="Confirmar senha"
+            />
           </div>
 
           <label className="flex items-start gap-2 text-sm text-neutral-700">
