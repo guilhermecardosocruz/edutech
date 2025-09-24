@@ -21,27 +21,22 @@ export default function RegisterPage() {
               <label htmlFor="name" className="block text-sm font-medium text-neutral-800">Nome completo</label>
               <input id="name" name="name" required autoComplete="name" className="input" />
             </div>
-
             <div className="space-y-1.5">
               <label htmlFor="cpf" className="block text-sm font-medium text-neutral-800">CPF</label>
-              <input id="cpf" name="cpf" inputMode="numeric" pattern="\d{11}" placeholder="Somente números" required className="input" />
+              <input id="cpf" name="cpf" inputMode="numeric" pattern="\\d{11}" placeholder="Somente números" required className="input" />
             </div>
-
             <div className="space-y-1.5 sm:col-span-2">
               <label htmlFor="email" className="block text-sm font-medium text-neutral-800">E-mail</label>
               <input id="email" name="email" type="email" required autoComplete="email" className="input" />
             </div>
-
             <div className="space-y-1.5">
               <label htmlFor="password" className="block text-sm font-medium text-neutral-800">Senha</label>
               <input id="password" name="password" type="password" required autoComplete="new-password" minLength={8} className="input" />
             </div>
-
             <div className="space-y-1.5">
               <label htmlFor="confirm" className="block text-sm font-medium text-neutral-800">Confirmar senha</label>
               <input id="confirm" name="confirm" type="password" required minLength={8} className="input" />
             </div>
-
             <div className="space-y-1.5 sm:col-span-2">
               <label htmlFor="role" className="block text-sm font-medium text-neutral-800">Perfil</label>
               <select id="role" name="role" required className="input">
@@ -63,9 +58,7 @@ export default function RegisterPage() {
 
           <div className="text-center text-sm text-neutral-700">
             Já tem conta?{" "}
-            <Link href="/(auth)/login" className="font-semibold text-[var(--color-secondary)] hover:underline">
-              Entrar
-            </Link>
+            <Link href="/login" className="font-semibold text-[var(--color-secondary)] hover:underline">Entrar</Link>
           </div>
         </form>
       </div>

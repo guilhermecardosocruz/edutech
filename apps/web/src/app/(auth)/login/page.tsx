@@ -18,7 +18,7 @@ export default function LoginPage() {
         <form action="/api/auth/login" method="post" className="card p-5 sm:p-6 space-y-4">
           <div className="space-y-1.5">
             <label htmlFor="cpf" className="block text-sm font-medium text-neutral-800">CPF</label>
-            <input id="cpf" name="cpf" inputMode="numeric" pattern="\d{11}" placeholder="Somente números" required className="input" />
+            <input id="cpf" name="cpf" inputMode="numeric" pattern="\\d{11}" placeholder="Somente números" required className="input" />
           </div>
 
           <div className="space-y-1.5">
@@ -40,7 +40,7 @@ export default function LoginPage() {
 
           <div className="text-center text-sm text-neutral-700">
             Não tem conta?{" "}
-            <Link href="/(auth)/register" className="font-semibold text-[var(--color-secondary)] hover:underline">
+            <Link href="/register" className="font-semibold text-[var(--color-secondary)] hover:underline">
               Cadastre-se
             </Link>
           </div>
