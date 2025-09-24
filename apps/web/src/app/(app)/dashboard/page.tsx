@@ -2,8 +2,9 @@ import Link from "next/link";
 import { cookies } from "next/headers";
 
 export const metadata = { title: "Dashboard — Edutech" };
-export const dynamic = "force-dynamic"; // evita estático
-export const revalidate = 0;            // sem ISR/cache
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+export const fetchCache = "force-no-store";
 
 type Turma = { id: string; name: string; createdAt: string };
 

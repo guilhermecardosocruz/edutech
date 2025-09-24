@@ -21,17 +21,16 @@ export async function POST(request: Request) {
   // adiciona turma
   list.push({ id, name, createdAt: new Date().toISOString() });
 
-  // monta o redirect
+  // monta redirect e seta cookie no mesmo response
   const url = new URL(`/turmas/${id}?name=${encodeURIComponent(name)}`, request.url);
   const res = NextResponse.redirect(url, { status: 302 });
 
-  // **seta o cookie no mesmo response** do redirect
   res.cookies.set({
     name: "turmas",
     value: JSON.stringify(list),
     httpOnly: true,
     sameSite: "lax",
-    secure: true,          // em prod (Vercel) é HTTPS
+    secure: true, // OK em produção (Vercel)
     path: "/",
     maxAge: 60 * 60 * 24 * 180, // 180 dias
   });
