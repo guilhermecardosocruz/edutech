@@ -8,6 +8,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@edu/db": "workspace:^",
     "@edu/ui": "workspace:*",
     "@edu/utils": "workspace:*",
     "next": "15.0.0",
