@@ -1,0 +1,7 @@
+{
+  "framework": "nextjs",
+  "installCommand": "pnpm -w install --frozen-lockfile",
+  "buildCommand": "pnpm -w build --filter @edu/web...",
+  "outputDirectory": ".next",
+  "env": { "NEXT_TELEMETRY_DISABLED": "1" }
+}
