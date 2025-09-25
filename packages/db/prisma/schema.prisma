@@ -3,105 +3,69 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider          = "postgresql"
+  url               = env("DATABASE_URL")
+  shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
 }
 
 enum Role {
-  admin
-  gestor
-  professor
+  ADMIN
+  TEACHER
+  STUDENT
+}
+
+enum PresencaStatus {
+  PRESENTE
+  AUSENTE
+  JUSTIFICADO
 }
 
 model User {
-  id             String         @id @default(cuid())
-  email          String         @unique
-  name           String
-  role           Role           @default(professor)
-  password       String
-  createdAt      DateTime       @default(now())
-  teacherClasses TeacherClass[]
-}
-
-model School {
-  id         String      @id @default(cuid())
-  name       String
-  createdAt  DateTime    @default(now())
-  classrooms Classroom[]
-}
-
-model Classroom {
-  id            String         @id @default(cuid())
+  id            String   @id @default(cuid())
   name          String
-  year          Int
-  schoolId      String
-  school        School         @relation(fields: [schoolId], references: [id])
-  lessonPlans   LessonPlan[]
-  announcements Announcement[]
-  assessments   Assessment[]
-  teachers      TeacherClass[]
+  email         String   @unique
+  cpf           String   @unique
+  password_hash String
+  role          Role     @default(STUDENT)
+  created_at    DateTime @default(now())
+  updated_at    DateTime @updatedAt
+
+  presencas     Presenca[]
 }
 
-model TeacherClass {
-  userId      String
-  classroomId String
-  user        User      @relation(fields: [userId], references: [id])
-  classroom   Classroom @relation(fields: [classroomId], references: [id])
+model Turma {
+  id         String   @id @default(cuid())
+  nome       String
+  ano        Int
+  turno      String
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
 
-  @@id([userId, classroomId])
+  aulas      Aula[]
 }
 
-model LessonPlan {
-  id          String       @id @default(cuid())
-  classroomId String
-  classroom   Classroom    @relation(fields: [classroomId], references: [id])
-  title       String
-  objectives  String?
-  date        DateTime
-  createdById String?
-  createdAt   DateTime     @default(now())
-  attachments Attachment[]
+model Aula {
+  id         String   @id @default(cuid())
+  titulo     String
+  data       DateTime
+  turma      Turma    @relation(fields: [turma_id], references: [id], onDelete: Cascade)
+  turma_id   String
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  presencas  Presenca[]
 }
 
-model Attachment {
-  id     String     @id @default(cuid())
-  planId String
-  plan   LessonPlan @relation(fields: [planId], references: [id])
-  url    String
-  type   String
-}
+model Presenca {
+  id         String          @id @default(cuid())
+  aula       Aula            @relation(fields: [aula_id], references: [id], onDelete: Cascade)
+  aula_id    String
+  user       User            @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  user_id    String
+  status     PresencaStatus
+  obs        String?
+  created_at DateTime        @default(now())
+  updated_at DateTime        @updatedAt
 
-model Announcement {
-  id          String    @id @default(cuid())
-  classroomId String
-  classroom   Classroom @relation(fields: [classroomId], references: [id])
-  title       String
-  body        String
-  publishedAt DateTime  @default(now())
-  readCount   Int       @default(0)
-}
-
-enum AssessmentKind {
-  objective
-  short
-}
-
-model Assessment {
-  id          String         @id @default(cuid())
-  classroomId String
-  classroom   Classroom      @relation(fields: [classroomId], references: [id])
-  title       String
-  kind        AssessmentKind
-  dueDate     DateTime?
-  createdAt   DateTime       @default(now())
-  submissions Submission[]
-}
-
-model Submission {
-  id           String     @id @default(cuid())
-  assessmentId String
-  assessment   Assessment @relation(fields: [assessmentId], references: [id])
-  userId       String
-  score        Float?
-  submittedAt  DateTime?
+  @@unique([aula_id, user_id])
 }
