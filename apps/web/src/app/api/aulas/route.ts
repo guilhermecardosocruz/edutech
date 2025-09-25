@@ -28,28 +28,46 @@ export async function OPTIONS() {
 
 export async function GET() {
   const traceId = crypto.randomUUID()
-  const res = NextResponse.json(
-    await prisma.aula.findMany({ orderBy: { data: 'desc' } }),
-    { status: 200 }
-  )
-  res.headers.set('x-trace-id', traceId)
-  cors(res)
-  return res
+  try {
+    const data = await prisma.aula.findMany({ orderBy: { data: 'desc' } })
+    const res = NextResponse.json(data, { status: 200 })
+    res.headers.set('x-trace-id', traceId)
+    cors(res)
+    return res
+  } catch (e: any) {
+    const res = NextResponse.json(
+      { error: 'internal_error', hint: 'db_or_env_issue', message: e?.message || 'unknown' },
+      { status: 500 },
+    )
+    res.headers.set('x-trace-id', traceId)
+    cors(res)
+    return res
+  }
 }
 
 export async function POST(req: Request) {
   const traceId = crypto.randomUUID()
-  const body = await req.json()
-  const parsed = createSchema.safeParse(body)
-  if (!parsed.success) {
-    const r = NextResponse.json({ error: 'invalid_body', issues: parsed.error.flatten() }, { status: 400 })
+  try {
+    const body = await req.json()
+    const parsed = createSchema.safeParse(body)
+    if (!parsed.success) {
+      const r = NextResponse.json({ error: 'invalid_body', issues: parsed.error.flatten() }, { status: 400 })
+      r.headers.set('x-trace-id', traceId)
+      cors(r)
+      return r
+    }
+    const aula = await prisma.aula.create({ data: parsed.data })
+    const r = NextResponse.json(aula, { status: 201 })
+    r.headers.set('x-trace-id', traceId)
+    cors(r)
+    return r
+  } catch (e: any) {
+    const r = NextResponse.json(
+      { error: 'internal_error', hint: 'db_or_env_issue', message: e?.message || 'unknown' },
+      { status: 500 },
+    )
     r.headers.set('x-trace-id', traceId)
     cors(r)
     return r
   }
-  const aula = await prisma.aula.create({ data: parsed.data })
-  const r = NextResponse.json(aula, { status: 201 })
-  r.headers.set('x-trace-id', traceId)
-  cors(r)
-  return r
 }
