@@ -1,18 +1,15 @@
 {
   "$schema": "https://turbo.build/schema.json",
-  "globalEnv": [
-    "DATABASE_URL",
-    "NEXTAUTH_SECRET",
-    "NEXT_PUBLIC_APP_URL"
-  ],
   "tasks": {
     "build": {
       "dependsOn": ["^build"],
-      "outputs": ["dist/**", ".next/**", "build/**"]
+      "outputs": ["dist/**", ".next/**"]
     },
-    "dev": { "cache": false, "persistent": true },
-    "lint": { "outputs": [] },
-    "typecheck": { "outputs": [] },
-    "test": { "outputs": ["coverage/**"] }
+    "typecheck": {
+      "dependsOn": ["^typecheck"]
+    },
+    "dev": {
+      "cache": false
+    }
   }
 }
